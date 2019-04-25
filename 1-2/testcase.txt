@@ -1,0 +1,141 @@
+DB testcase
+
+create table account(
+primary key(account_number, branch),
+account_number int not null,
+branch char(13),
+tmp char(5)
+);
+//'account' table is created
+
+create table account(
+primary key(account_number, branch),
+account_number int not null,
+branch char(13),
+tmp char(5)
+);
+//Create table has failed: table with the same name already exists 
+
+create table AccOUNt(
+primary key(account_number, branch),
+account_number int not null,
+branch char(13),
+tmp char(5)
+);
+//Create table has failed: table with the same name already exists (added 04/24)
+
+create table bccount(
+foreign key(account_number, branch) references account(account_number),
+account_number int not null,
+branch char(13)
+);
+//Create table has failed: foreign key references wrong type
+
+create table cccount(
+foreign key(account_number, branch) references account(account_number, branch),
+account_number int not null,
+branch char(11)
+);
+//Create table has failed: foreign key references wrong type
+
+
+create table dccount(
+foreign key(account_number, branch) references account(account_number, tmp),
+account_number int not null,
+branch char(13)
+);
+//Create table has failed: foreign key references wrong type
+
+
+create table eccount(
+foreign key(account_number, branch) references account(account_number, branch),
+account_number int not null,
+branch char(13),
+primary key(account_number),
+primary key(branch)
+);
+//Create table has failed: primary key definition is duplicated
+
+create table fccount(
+foreign key(account_number, branch) references account(account_number, branch),
+account_number int not null,
+branch char(13),
+primary key(account_number, branch)
+);
+//'fccount' table is created
+
+create table gccount(
+foreign key(account_number, branch) references account(account_number, branch),
+foreign key(account_number, cranch) references fccount(account_number, branch),
+account_number int not null,
+branch char(13),
+cranch char(13),
+primary key(account_number, branch)
+);
+//(자신만의 고유한 에러 메시지/메시지에 명시 안된 에러)
+
+create table hccount(
+foreign key(account_number, branch) references dccount(account_number, branch),
+account_number int not null,
+branch char(13),
+primary key(account_number, branch)
+);
+//Create table has failed: foreign key references non existing table
+
+create table iccount(
+branch char(13),
+branch char(13),
+primary key(branch)
+);
+//Create table has failed: column definition is duplicated
+
+create table jccount(
+branch char(13),
+primary key(cranch)
+);
+//Create table has failed: 'cranch' does not exists in column definition (added by 이종민)
+
+drop table account;
+//Drop table has failed: 'account' is referenced by other table
+
+drop table something;
+//No such table
+
+show tables;
+//account, fccount
+
+desc account exit
+//Syntax error (added by 백승욱)
+
+desc account;
+//account_number int N PRI
+//branch char(13) N PRI
+//tmp char(5) Y 
+
+desc fccount;
+//account_number int N PRI/FOR
+//branch char(13) N PRI/FOR
+
+desc something;
+//No such table
+
+drop table fccount exit 
+//Syntax error (added by 백승욱)
+
+drop table fccount;
+//'fccount' table is dropped
+
+drop table account;
+//'account' table is dropped
+
+create table a(x int) exit
+//Syntax error (added by 백승욱)
+
+show tables;
+//There is no table
+
+show tables exit
+//Syntax error (added by 백승욱)
+
+exit;
+//exit
